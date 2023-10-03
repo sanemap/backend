@@ -39,3 +39,7 @@ Server.middleware.register([() => import('@ioc:Adonis/Core/BodyParser')])
 |
 */
 Server.middleware.registerNamed({})
+
+Server.middleware.registerNamed({
+  firebase: () => import('App/Middleware/Firebase')
+})
