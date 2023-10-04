@@ -26,3 +26,5 @@ Route.get('/', async () => {
 }).middleware('firebase')
 
 Route.post('register', 'RegistersController.store' )
+
+Route.post ('description' 'InsertPostsController.store' )
