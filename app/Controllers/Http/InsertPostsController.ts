@@ -1,0 +1,11 @@
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+
+
+export default class InsertPostsController {
+
+  public async store({request, response}: HttpContextContract) {
+
+    
+
+  }
+}
