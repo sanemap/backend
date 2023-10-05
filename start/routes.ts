@@ -23,8 +23,24 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', async () => {
 
   return { hello: 'world' }
-}).middleware('firebase')
+})
 
-Route.post('register', 'RegistersController.store' )
+Route.post('login', async ({ auth, request, response }) => {
+  const email = request.input('email')
+  const password = request.input('password')
 
-Route.post ('description' 'InsertPostsController.store' )
+  try {
+    const token = await auth.use('api').attempt(email, password)
+    return token
+  } catch {
+    return response.unauthorized('Invalid credentials')
+  }
+})
+
+Route.post('register', 'RegistersController.store')
+
+Route
+  .group(() => {
+    Route.get('profile', 'ProfilesController.index')
+    Route.post('publications', 'PublicationsController.store')
+  }).prefix('/app').middleware('auth')
