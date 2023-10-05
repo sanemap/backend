@@ -43,4 +43,5 @@ Route
   .group(() => {
     Route.get('profile', 'ProfilesController.index')
     Route.post('publications', 'PublicationsController.store')
+    Route.get('publications/:id', 'PublicationsController.show')
   }).prefix('/app').middleware('auth')
