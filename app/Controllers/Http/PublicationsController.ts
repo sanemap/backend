@@ -11,7 +11,7 @@ export default class PublicationsController {
     const publication  = await Publication.find(params.id)
 
     if (!publication) {
-      return response.status(404).json({ message: 'Publication not found' })
+      return response.status(404).json({ message: 'Publicação não encontrada' })
     }
 
     await publication?.preload('images')
