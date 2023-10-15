@@ -7,6 +7,28 @@ import Publication from 'App/Models/Publication'
 
 export default class PublicationsController {
 
+  public async index({request, response}: HttpContextContract) {
+    const type = request.input('type', 'newest')
+
+    let publications: Publication[] = []
+
+    if (type === 'oldest') {
+      publications = await Publication.query()
+        .orderBy('created_at', 'asc')
+        .preload('images')
+        .preload('user')
+      return response.status(200).json(publications)
+    }else if (type === 'newest') {
+      publications = await Publication.query()
+        .orderBy('created_at', 'desc')
+        .preload('images')
+        .preload('user')
+      return response.status(200).json(publications)
+    }else{
+      return response.status(400).json({ message: 'Tipo de ordenação inválido' })
+    }
+  }
+
   public async show({params, response}: HttpContextContract) {
     const publication  = await Publication.find(params.id)
 
