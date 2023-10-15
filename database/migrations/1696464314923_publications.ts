@@ -12,7 +12,7 @@ export default class extends BaseSchema {
       table.string('status')
       table.double('latitude').nullable()
       table.double('longitude').nullable()
-      table.string('reports').nullable()
+      table.bigint('reports').defaultTo(0)
       table.integer('user_id')
         .unsigned()
         .references('users.id')

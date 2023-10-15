@@ -17,7 +17,7 @@ export default class Publication extends BaseModel {
   public status: string
 
   @column()
-  public reports: string
+  public reports: number
 
   @column()
   public userId: number
