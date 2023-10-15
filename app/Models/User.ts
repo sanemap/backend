@@ -32,6 +32,9 @@ export default class User extends BaseModel {
   @column()
   public avatar: string
 
+  @column()
+  public sanecoin: string
+
   @hasMany(() => Publication)
   public publications: HasMany<typeof Publication>
 
