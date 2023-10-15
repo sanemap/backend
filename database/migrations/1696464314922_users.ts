@@ -14,7 +14,7 @@ export default class extends BaseSchema {
       table.date('nascimento').nullable()
       table.string('telefone').nullable()
       table.string('avatar').nullable()
-      table.string('sanecoin').nullable()
+      table.double('sanecoin').nullable().defaultTo(0.0)
 
       /**
        * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL

@@ -33,7 +33,7 @@ export default class User extends BaseModel {
   public avatar: string
 
   @column()
-  public sanecoin: string
+  public sanecoin: number
 
   @hasMany(() => Publication)
   public publications: HasMany<typeof Publication>
