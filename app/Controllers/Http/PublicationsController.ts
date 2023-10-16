@@ -7,7 +7,7 @@ import Publication from 'App/Models/Publication'
 
 export default class PublicationsController {
 
-  public async index({request, response}: HttpContextContract) {
+  public async index({ request, response }: HttpContextContract) {
     const type = request.input('type', 'newest')
 
     let publications: Publication[] = []
@@ -18,19 +18,19 @@ export default class PublicationsController {
         .preload('images')
         .preload('user')
       return response.status(200).json(publications)
-    }else if (type === 'newest') {
+    } else if (type === 'newest') {
       publications = await Publication.query()
         .orderBy('created_at', 'desc')
         .preload('images')
         .preload('user')
       return response.status(200).json(publications)
-    }else{
+    } else {
       return response.status(400).json({ message: 'Tipo de ordenação inválido' })
     }
   }
 
-  public async show({params, response}: HttpContextContract) {
-    const publication  = await Publication.find(params.id)
+  public async show({ params, response }: HttpContextContract) {
+    const publication = await Publication.find(params.id)
 
     if (!publication) {
       return response.status(404).json({ message: 'Publicação não encontrada' })
@@ -40,7 +40,7 @@ export default class PublicationsController {
     return response.status(200).json(publication)
   }
 
-  public async store({auth, request, response}: HttpContextContract) {
+  public async store({ auth, request, response }: HttpContextContract) {
     const { description, location } = request.all()
     const images = request.files('images')
     const user = auth.user
@@ -49,14 +49,22 @@ export default class PublicationsController {
     const publicationResponse = await publication.create(description, location, 'open', Number(user?.id))
 
     for (let image of images) {
-      await image.move(Application.tmpPath('uploads'))
-await PublicationImage.create({
+
+      const fileName = `${Date.now()}-${image.clientName}`
+
+      await image.move(
+        Application.tmpPath('uploads'),
+        {
+          name: fileName
+        }
+      )
+      await PublicationImage.create({
         publicationId: publicationResponse.id,
         path: image.filePath,
-        name: image.fileName,
+        name: fileName,
         type: image.type,
-        size: image.size
-})
+        size: image.size,
+      })
     }
 
     return response.status(201).json(publicationResponse)

@@ -28,7 +28,7 @@ export default class PublicationImage extends BaseModel {
   //computed url
   @computed()
   public get url() {
-    return `${process.env.APP_URL}/uploads/${this.path}`
+    return `${process.env.APP_URL}/uploads/${this.name}`
   }
 
   @column.dateTime({ autoCreate: true })
